@@ -1,0 +1,86 @@
+---
+import CartButton from '../components/CartButton.astro';
+import DownloadButton from '../components/DownloadButton.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import Layout from '../layouts/Layout.astro';
+
+// A stand-in for your data: a CMS, a database, read when the page is built.
+const products = [
+    { id: 1, name: 'Headphones', price: '$129', inCart: true },
+    { id: 2, name: 'Keyboard', price: '$89', inCart: false },
+];
+---
+
+<Layout title="Scripts">
+    <h1>Icons that follow your scripts</h1>
+    <p class="lead">
+        Astro puts the state in the HTML, as an attribute, and a few lines of{' '}
+        <code>&lt;script&gt;</code> change it; <code>trigger="follow"</code> keeps the icon in step.
+        No framework, no event wiring for the icon itself.
+    </p>
+
+    <h2>A toggle, from the page's data</h2>
+    <p class="note">
+        Each button carries <code>aria-pressed</code>, set from the page's data when it is built,
+        and the headphones are in the cart from the start: their icon starts on the second look,
+        without playing. A click flips the attribute, and the icon morphs.
+    </p>
+    <ul class="products">
+        {products.map((product) => (
+            <li class="product">
+                <span>
+                    {product.name} <span class="price">{product.price}</span>
+                </span>
+                <CartButton inCart={product.inCart} />
+            </li>
+        ))}
+    </ul>
+
+    <h2>A process, in stages</h2>
+    <p class="note">
+        <code>follow(data-state, busy=loop-cycle, done=morph-check)</code> gives each value its
+        animation: a loop while busy, a check when done, and back.
+    </p>
+    <div class="actions">
+        <DownloadButton />
+    </div>
+
+    <h2>Played from code, after an action</h2>
+    <p class="note">
+        <code>querySelector('lord-icon')</code> gives the element, with <code>play()</code>. The
+        form calls an Astro action on the server, and the icon plays when the server has answered.
+    </p>
+    <SubscribeForm />
+
+    <p class="next">
+        <a href="/server-rendering" class="link">
+            Next: server rendering →
+        </a>
+    </p>
+</Layout>
+
+<style>
+    .products {
+        max-width: 480px;
+        margin-top: 16px;
+        list-style: none;
+    }
+
+    .product {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .price {
+        margin-left: 6px;
+        color: var(--muted);
+    }
+
+    .next {
+        margin-top: 48px;
+    }
+</style>

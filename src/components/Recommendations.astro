@@ -1,0 +1,21 @@
+---
+/** A server island: rendered on its own request, after the page, with data that is slow to come. */
+
+// A stand-in for data that is personal, or slow to come.
+await new Promise((resolve) => setTimeout(resolve, 1500));
+
+const recommendations = [
+    { id: 1, title: 'Secure your account', icon: '/icons/lock.json' },
+    { id: 2, title: 'Earn rewards', icon: '/icons/coins.json' },
+    { id: 3, title: 'Add an extension', icon: '/icons/puzzle.json' },
+];
+---
+
+<div class="grid">
+    {recommendations.map((item) => (
+        <figure class="tile">
+            <lord-icon src={item.icon} intro="in-reveal" trigger="hover" target="figure" />
+            <figcaption>{item.title}</figcaption>
+        </figure>
+    ))}
+</div>

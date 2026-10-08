@@ -1,0 +1,40 @@
+---
+/** A process: the button carries its stage as `data-state`, and the icon follows it. */
+---
+
+<button type="button" class="button" data-state="idle" data-download-button>
+    <lord-icon
+        src="/icons/download.json"
+        trigger="follow(data-state, busy=loop-cycle, done=morph-check)"
+        target="button"
+        current-color
+    />
+    <span>Download</span>
+</button>
+
+<script>
+    type Stage = 'idle' | 'busy' | 'done';
+
+    const LABELS: Record<Stage, string> = {
+        idle: 'Download',
+        busy: 'Downloading…',
+        done: 'Downloaded',
+    };
+
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-download-button]')) {
+        const label = button.querySelector('span')!;
+
+        const show = (stage: Stage) => {
+            button.dataset.state = stage;
+            button.disabled = stage !== 'idle';
+            label.textContent = LABELS[stage];
+        };
+
+        // Pretend work: busy for two seconds, done for two more, then ready again.
+        button.addEventListener('click', () => {
+            show('busy');
+            setTimeout(() => show('done'), 2000);
+            setTimeout(() => show('idle'), 4000);
+        });
+    }
+</script>

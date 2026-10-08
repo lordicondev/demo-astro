@@ -1,0 +1,69 @@
+---
+import ExampleTile from '../components/ExampleTile.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+    <h1>Animated icons in an Astro site</h1>
+    <p class="lead">
+        <code>&lt;lord-icon&gt;</code> goes straight into any <code>.astro</code> file, like this
+        page. Its attributes say what the icon is and when it plays: no island, no framework. Hover,
+        click or scroll.
+    </p>
+
+    <h2>Triggers</h2>
+    <div class="grid">
+        <ExampleTile code='trigger="hover"'>
+            <lord-icon src="/icons/lock.json" trigger="hover" />
+        </ExampleTile>
+        <ExampleTile code='trigger="click"'>
+            <lord-icon src="/icons/coins.json" trigger="click" state="hover-jump" />
+        </ExampleTile>
+        <ExampleTile code='trigger="loop"'>
+            <lord-icon src="/icons/coins.json" trigger="loop" state="loop-spin" />
+        </ExampleTile>
+        <ExampleTile code='trigger="morph"'>
+            <lord-icon src="/icons/lock.json" trigger="morph" state="morph-unlocked" />
+        </ExampleTile>
+        <ExampleTile code='trigger="in"'>
+            <lord-icon src="/icons/puzzle.json" trigger="in" state="in-reveal" />
+        </ExampleTile>
+    </div>
+
+    <h2>Looks</h2>
+    <p class="note">
+        The last icon takes its colour from CSS, as on a dark theme:{' '}
+        <code>--lord-icon-primary</code>, in <code>global.css</code>.
+    </p>
+    <div class="grid">
+        <ExampleTile code='colors="primary:…,secondary:…"'>
+            <lord-icon
+                src="/icons/puzzle.json"
+                trigger="hover"
+                colors="primary:#e83a30,secondary:#f9a400"
+            />
+        </ExampleTile>
+        <ExampleTile code='stroke="bold"'>
+            <lord-icon src="/icons/lock.json" trigger="hover" stroke="bold" />
+        </ExampleTile>
+        <ExampleTile code="--lord-icon-primary" dark>
+            <lord-icon src="/icons/coins.json" trigger="hover" />
+        </ExampleTile>
+    </div>
+
+    <h2>In buttons and links</h2>
+    <p class="note">
+        <code>target</code> plays the icon when the pointer is anywhere on the button, and{' '}
+        <code>current-color</code> gives it the colour of the text.
+    </p>
+    <div class="actions">
+        <button type="button" class="button">
+            <lord-icon src="/icons/download.json" trigger="hover" target="button" current-color />
+            Download
+        </button>
+        <a href="/scripts" class="link">
+            <lord-icon src="/icons/morph-account.json" trigger="hover" target="a" current-color />
+            Next: icons that follow your scripts
+        </a>
+    </div>
+</Layout>

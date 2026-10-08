@@ -1,0 +1,205 @@
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --muted: #6b6b6b;
+    --border: #e5e5e5;
+    --accent: #08a88a;
+
+    font-family:
+        system-ui,
+        -apple-system,
+        'Segoe UI',
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+    line-height: 1.5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+a {
+    color: inherit;
+}
+
+code,
+pre {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+}
+
+/*
+ * Lordicon: the icon's size, in place before the script runs, so the page does not shift
+ * when the icon loads. The placeholder inside takes the same size. In `@layer base`, so
+ * that your own classes can still give one icon another size. With Tailwind 4 the layer
+ * matters: its classes sit in a layer, and a rule outside any layer beats them.
+ */
+@layer base {
+    lord-icon {
+        display: inline-block;
+        width: 64px;
+        height: 64px;
+    }
+
+    lord-icon:not(:defined) > * {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* The page */
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+}
+
+.nav a[aria-current='page'] {
+    text-decoration: none;
+}
+
+.main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+}
+
+h1 {
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+h2 {
+    margin: 40px 0 8px;
+    font-size: 18px;
+}
+
+.lead,
+.note {
+    max-width: 640px;
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+.code {
+    max-width: 640px;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* Examples: an icon, and the props that make it */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding: 20px 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.tile code {
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+/* A dark surface: the icon's dark colour turns light there, from CSS. */
+.dark {
+    background: #121331;
+    color: #ededed;
+}
+
+.dark lord-icon {
+    --lord-icon-primary: #ededed;
+}
+
+.dark code {
+    color: #b8b8c8;
+}
+
+/* Buttons and links with an icon in them */
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.button {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 18px 8px 12px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font: inherit;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* A toggle that is off: outlined; on, it fills in. */
+.button[aria-pressed='false'] {
+    background: transparent;
+    color: var(--accent);
+    box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.button:disabled {
+    cursor: default;
+}
+
+.button lord-icon,
+.link lord-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.link {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: none;
+}

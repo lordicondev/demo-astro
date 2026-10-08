@@ -1,0 +1,16 @@
+---
+/** One example: the icon, and the attributes that make it. */
+interface Props {
+    code: string;
+    dark?: boolean;
+}
+
+const { code, dark = false } = Astro.props;
+---
+
+<figure class:list={['tile', { dark }]}>
+    <slot />
+    <figcaption>
+        <code>{code}</code>
+    </figcaption>
+</figure>

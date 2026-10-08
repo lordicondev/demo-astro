@@ -1,0 +1,62 @@
+---
+/** A form that calls an action on the server; the icon plays once the server has answered. */
+---
+
+<form class="form" data-subscribe-form>
+    <lord-icon src="/icons/confetti.json" />
+    <input
+        type="email"
+        name="email"
+        required
+        placeholder="you@example.com"
+        aria-label="Email"
+        class="input"
+    />
+    <button class="button">Subscribe</button>
+    <p role="status" class="status"></p>
+</form>
+
+<script>
+    import { actions } from 'astro:actions';
+
+    for (const form of document.querySelectorAll<HTMLFormElement>('[data-subscribe-form]')) {
+        // A LordIconElement, typed: @lordicon/element declares the tag.
+        const icon = form.querySelector('lord-icon')!;
+        const status = form.querySelector('[role="status"]')!;
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const { data, error } = await actions.subscribe(new FormData(form));
+            if (error) {
+                status.textContent = error.message;
+                return;
+            }
+            status.textContent = data.message;
+            void icon.play({ from: 'start' });
+        });
+    }
+</script>
+
+<style>
+    .form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 16px;
+    }
+
+    .input {
+        min-width: 220px;
+        padding: 9px 14px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        font: inherit;
+    }
+
+    .status {
+        flex-basis: 100%;
+        min-height: 1.5em;
+        color: var(--muted);
+    }
+</style>

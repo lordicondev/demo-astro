@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+
+interface Props {
+    title?: string;
+}
+
+const { title } = Astro.props;
+
+const links = [
+    { href: '/', label: 'Basics' },
+    { href: '/scripts', label: 'Scripts' },
+    { href: '/server-rendering', label: 'Server rendering' },
+];
+
+const path = Astro.url.pathname.replace(/(.)\/$/, '$1');
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta
+            name="description"
+            content="Animated Lordicon icons in an Astro site, with @lordicon/element."
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title ? `${title} · Lordicon × Astro` : 'Lordicon × Astro'}</title>
+        <script>
+            import { defineElement } from '@lordicon/element';
+
+            // Defines <lord-icon> in the browser. Astro bundles this script and runs it once on
+            // every page; the HTML already has the tag with its attributes, and the icon takes
+            // over once this has run.
+            defineElement();
+        </script>
+    </head>
+    <body>
+        <header class="header">
+            <a href="/" class="brand">
+                Lordicon × Astro
+            </a>
+            <nav class="nav">
+                {links.map((link) => (
+                    <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+                        {link.label}
+                    </a>
+                ))}
+            </nav>
+        </header>
+        <main class="main">
+            <slot />
+        </main>
+    </body>
+</html>

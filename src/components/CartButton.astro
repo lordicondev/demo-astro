@@ -1,0 +1,29 @@
+---
+/** A toggle: the icon follows the button's `aria-pressed`, which the script below flips. */
+interface Props {
+    inCart: boolean;
+}
+
+const { inCart } = Astro.props;
+---
+
+<button type="button" class="button" aria-pressed={inCart} data-cart-button>
+    <lord-icon
+        src="/icons/morph-shopping.json"
+        trigger="follow"
+        target="button"
+        state="morph-select"
+        current-color
+    />
+    In cart
+</button>
+
+<script>
+    // Astro runs this once on the page, however many buttons there are: it finds them all.
+    for (const button of document.querySelectorAll('[data-cart-button]')) {
+        button.addEventListener('click', () => {
+            const pressed = button.getAttribute('aria-pressed') === 'true';
+            button.setAttribute('aria-pressed', String(!pressed));
+        });
+    }
+</script>
